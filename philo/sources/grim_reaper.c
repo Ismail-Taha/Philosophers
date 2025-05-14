@@ -104,7 +104,7 @@ void	*grim_reaper(void *data)
 	{
 		if (end_condition_reached(table) == true)
 			return (NULL);
-		usleep(1000);
+		// usleep(1000);
 	}
 	return (NULL);
 }
