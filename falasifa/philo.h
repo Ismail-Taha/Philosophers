@@ -7,45 +7,45 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct s_philo
+typedef struct s_simulation
 {
-	int				nb_ph;
-	int				tm_die;
-	int				tm_eat;
-	int				nb_meal;
-	int				tm_slp;
-	int				philo_die;
-	int				check;
-	pthread_mutex_t	wr_eat[2];
-	pthread_mutex_t	*forks;
-}	t_philo;
+    int				num_philosophers;
+    int				time_to_die;
+    int				time_to_eat;
+    int				num_meals;
+    int				time_to_sleep;
+    int				simulation_stopped;
+    int				meals_required;
+    pthread_mutex_t	write_and_meal_mutexes[2];
+    pthread_mutex_t	*fork_mutexes;
+}	t_simulation;
 
-typedef struct s_philo_info
+typedef struct s_philosopher
 {
-	int				id;
-	int				n_diner;
-	long long		last_time_eating;
-	long long		date_of_birth;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*left_fork;
-	t_philo			*data_of_philo;
-}	t_philo_info;
+    int				philosopher_id;
+    int				meals_eaten;
+    long long		last_meal_time;
+    long long		simulation_start_time;
+    pthread_mutex_t	*right_fork_mutex;
+    pthread_mutex_t	*left_fork_mutex;
+    t_simulation	*simulation_data;
+}	t_philosopher;
 
 void			ft_putstr_fd(int fd, char *str);
 int				ft_atoi(const char *str);
 int				ft_error(int flag);
 int				check_is_digit(char **av);
 long long		get_time_in_ms(void);
-void			ft_print_status(t_philo_info *data, char *str);
-void			*ft_routine_philo(void *args);
-void			ft_create_threads(t_philo_info **info);
-t_philo_info	**init_each_philo(t_philo *life);
-void			ft_free(t_philo_info **adress, int how_much);
-void			ft_memory_management(t_philo *life_routine, \
-										t_philo_info **data);
-void			ft_usleep(t_philo_info *data, long long mls);
+void			ft_print_status(t_philosopher *philosopher, char *str);
+void			*ft_routine_philosopher(void *args);
+void			ft_create_threads(t_philosopher **philosophers);
+t_philosopher	**init_each_philosopher(t_simulation *simulation);
+void			ft_free(t_philosopher **address, int count);
+void			ft_memory_management(t_simulation *simulation, \
+                                        t_philosopher **philosophers);
+void			ft_usleep(t_philosopher *philosopher, long long milliseconds);
 void			*shinigami(void *add);
-void			eating(t_philo_info *data);
-void			thinking(t_philo_info *data);
-void			sleeping(t_philo_info *data);
+void			eating(t_philosopher *philosopher);
+void			thinking(t_philosopher *philosopher);
+void			sleeping(t_philosopher *philosopher);
 #endif

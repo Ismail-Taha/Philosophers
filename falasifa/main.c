@@ -1,43 +1,48 @@
 #include "philo.h"
 
-t_philo	*get_life_routine(int ac, char **av)
+/* get_simulation_data:
+*	Parses command-line arguments and initializes the simulation structure.
+*	Allocates memory for the simulation and sets default values.
+*	Initializes mutexes for writing and meal tracking.
+*/
+t_simulation	*get_simulation_data(int argc, char **argv)
 {
-	t_philo	*ret;
+    t_simulation	*simulation;
 
-	ret = malloc(sizeof(t_philo));
-	if (!ret)
-		return (NULL);
-	ret->nb_ph = ft_atoi(av[1]);
-	ret->tm_die = ft_atoi(av[2]);
-	ret->tm_eat = ft_atoi(av[3]);
-	ret->tm_slp = ft_atoi(av[4]);
-	ret->check = 0;
-	ret->philo_die = 0;
-	pthread_mutex_init(&(ret->wr_eat[0]), NULL);
-	pthread_mutex_init(&(ret->wr_eat[1]), NULL);
-	if (ac == 6)
-	{
-		ret->check = 1;
-		ret->nb_meal = ft_atoi(av[5]);
-	}
-	return (ret);
+    simulation = malloc(sizeof(t_simulation));
+    if (!simulation)
+        return (NULL);
+    simulation->num_philosophers = ft_atoi(argv[1]);
+    simulation->time_to_die = ft_atoi(argv[2]);
+    simulation->time_to_eat = ft_atoi(argv[3]);
+    simulation->time_to_sleep = ft_atoi(argv[4]);
+    simulation->meals_required = 0;
+    simulation->simulation_stopped = 0;
+    pthread_mutex_init(&(simulation->write_and_meal_mutexes[0]), NULL);
+    pthread_mutex_init(&(simulation->write_and_meal_mutexes[1]), NULL);
+    if (argc == 6)
+    {
+        simulation->meals_required = 1;
+        simulation->num_meals = ft_atoi(argv[5]);
+    }
+    return (simulation);
 }
 
-int	main(int ac, char **av)
+int	main(int argc, char **argv)
 {
-	t_philo			*life_routine;
-	t_philo_info	**data;
+    t_simulation	*simulation;
+    t_philosopher	**philosophers;
 
-	if (ac == 5 || ac == 6)
-	{
-		if (check_is_digit(av))
-			return (1);
-		life_routine = get_life_routine(ac, av);
-		data = init_each_philo(life_routine);
-		ft_create_threads(data);
-		ft_memory_management(life_routine, data);
-	}
-	else
-		ft_putstr_fd(2, "try using 4 or 5 argument\n");
-	return (0);
+    if (argc == 5 || argc == 6)
+    {
+        if (check_is_digit(argv))
+            return (1);
+        simulation = get_simulation_data(argc, argv);
+        philosophers = init_each_philosopher(simulation);
+        ft_create_threads(philosophers);
+        ft_memory_management(simulation, philosophers);
+    }
+    else
+        ft_putstr_fd(2, "try using 4 or 5 arguments\n");
+    return (0);
 }

@@ -1,50 +1,62 @@
 #include "philo.h"
 
-t_philo_info	**init_each_philo(t_philo *life)
+/* init_each_philosopher:
+*	Initializes an array of philosopher structures.
+*	Assigns IDs, forks, and other attributes to each philosopher.
+*	Returns a pointer to the array of philosophers.
+*/
+t_philosopher	**init_each_philosopher(t_simulation *simulation)
 {
-	int				count;
-	t_philo_info	**info;
+    int				count;
+    t_philosopher	**philosophers;
 
-	count = 0;
-	info = malloc(sizeof(t_philo_info *) * life->nb_ph);
-	life->forks = malloc(sizeof(pthread_mutex_t) * life->nb_ph);
-	while (count < life->nb_ph)
-	{
-		pthread_mutex_init(&(life->forks[count]), NULL);
-		info[count] = malloc(sizeof(t_philo_info));
-		count++;
-	}
-	count = 0;
-	while (count < life->nb_ph)
-	{
-		info[count]->last_time_eating = 0;
-		info[count]->data_of_philo = life;
-		info[count]->id = count + 1;
-		info[count]->right_fork = &(life->forks[count]);
-		info[count]->left_fork = &(life->forks[(count + 1) % life->nb_ph]);
-		info[count]->n_diner = 0;
-		info[count]->date_of_birth = get_time_in_ms();
-		count++;
-	}
-	return (info);
+    count = 0;
+    philosophers = malloc(sizeof(t_philosopher *) * simulation->num_philosophers);
+    simulation->fork_mutexes = malloc(sizeof(pthread_mutex_t) * simulation->num_philosophers);
+    while (count < simulation->num_philosophers)
+    {
+        pthread_mutex_init(&(simulation->fork_mutexes[count]), NULL);
+        philosophers[count] = malloc(sizeof(t_philosopher));
+        count++;
+    }
+    count = 0;
+    while (count < simulation->num_philosophers)
+    {
+        philosophers[count]->last_meal_time = 0;
+        philosophers[count]->simulation_data = simulation;
+        philosophers[count]->philosopher_id = count + 1;
+        philosophers[count]->right_fork_mutex = &(simulation->fork_mutexes[count]);
+        philosophers[count]->left_fork_mutex = &(simulation->fork_mutexes[(count + 1) % simulation->num_philosophers]);
+        philosophers[count]->meals_eaten = 0;
+        philosophers[count]->simulation_start_time = get_time_in_ms();
+        count++;
+    }
+    return (philosophers);
 }
 
-void	ft_create_threads(t_philo_info **info)
+/* ft_create_threads:
+*	Creates threads for each philosopher and the shinigami (monitoring) thread.
+*	Waits for all threads to finish execution before cleaning up.
+*/
+void	ft_create_threads(t_philosopher **philosophers)
 {
-	int			count;
-	pthread_t	tid[200];
+    int			count;
+    pthread_t	*threads;
 
-	count = 0;
-	while (count < (*info)->data_of_philo->nb_ph)
-	{
-		pthread_create(&(tid[count]), NULL, &ft_routine_philo, info[count]);
-		count++;
-	}
-	shinigami(info);
-	count = 0;
-	while ((*info)->data_of_philo->nb_ph > count)
-	{
-		pthread_join(tid[count], NULL);
-		count++;
-	}
+    threads = malloc(sizeof(pthread_t) * (*philosophers)->simulation_data->num_philosophers);
+
+    count = 0;
+    while (count < (*philosophers)->simulation_data->num_philosophers)
+    {
+        pthread_create(&(threads[count]), NULL, &ft_routine_philosopher, philosophers[count]);
+        count++;
+    }
+    shinigami(philosophers);
+    count = 0;
+    while ((*philosophers)->simulation_data->num_philosophers > count)
+    {
+        pthread_join(threads[count], NULL);
+        count++;
+    }
+    free(threads);
 }
