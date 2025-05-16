@@ -66,12 +66,12 @@ int	time_last_eat_check(t_philosopher **data, int count)
     return (0);
 }
 
-/* shinigami:
+/* death_angel:
 *	Monitors the philosophers to check for death or if all have eaten enough.
 *	Continuously checks the simulation status and stops when necessary.
 *	Returns NULL when the simulation ends.
 */
-void	*shinigami(void *arg)
+void	*death_angel(void *arg)
 {
     t_philosopher	**data;
     t_simulation	*simulation_data;

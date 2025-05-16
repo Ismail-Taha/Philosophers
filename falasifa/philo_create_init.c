@@ -35,7 +35,7 @@ t_philosopher	**init_each_philosopher(t_simulation *simulation)
 }
 
 /* ft_create_threads:
-*	Creates threads for each philosopher and the shinigami (monitoring) thread.
+*	Creates threads for each philosopher and the death_angel (monitoring) thread.
 *	Waits for all threads to finish execution before cleaning up.
 */
 void	ft_create_threads(t_philosopher **philosophers)
@@ -51,7 +51,7 @@ void	ft_create_threads(t_philosopher **philosophers)
         pthread_create(&(threads[count]), NULL, &ft_routine_philosopher, philosophers[count]);
         count++;
     }
-    shinigami(philosophers);
+    death_angel(philosophers);
     count = 0;
     while ((*philosophers)->simulation_data->num_philosophers > count)
     {

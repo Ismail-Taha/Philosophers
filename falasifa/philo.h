@@ -44,7 +44,7 @@ void			ft_free(t_philosopher **address, int count);
 void			ft_memory_management(t_simulation *simulation, \
                                         t_philosopher **philosophers);
 void			ft_usleep(t_philosopher *philosopher, long long milliseconds);
-void			*shinigami(void *add);
+void			*death_angel(void *add);
 void			eating(t_philosopher *philosopher);
 void			thinking(t_philosopher *philosopher);
 void			sleeping(t_philosopher *philosopher);
