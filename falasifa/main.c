@@ -43,6 +43,6 @@ int	main(int argc, char **argv)
         ft_memory_management(simulation, philosophers);
     }
     else
-        ft_putstr_fd(2, "try using 4 or 5 arguments\n");
+        ft_putstr_fd(2, "Error: invalid number of arguments\nUsage: ./philo <number_of_philosophers> <time_to_die time_to_eat> <time_to_sleep> [number_of_times_must_eat]");
     return (0);
 }
