@@ -37,7 +37,7 @@ int				ft_error(int flag);
 int				check_is_digit(char **av);
 long long		get_time_in_ms(void);
 void			ft_print_status(t_philosopher *philosopher, char *str);
-void			*ft_routine_philosopher(void *args);
+void			*ft_schedule_philosopher(void *args);
 void			ft_create_threads(t_philosopher **philosophers);
 t_philosopher	**init_each_philosopher(t_simulation *simulation);
 void			ft_free(t_philosopher **address, int count);

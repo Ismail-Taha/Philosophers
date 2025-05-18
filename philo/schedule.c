@@ -101,7 +101,7 @@ void	*death_angel(void *arg)
 *	Alternates between eating, sleeping, and thinking.
 *	Checks the simulation status periodically to exit gracefully.
 */
-void	*ft_routine_philosopher(void *args)
+void	*ft_schedule_philosopher(void *args)
 {
     t_philosopher	*philosopher;
 

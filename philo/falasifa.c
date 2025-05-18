@@ -80,5 +80,7 @@ void	sleeping(t_philosopher *philosopher)
 */
 void	thinking(t_philosopher *data)
 {
+    if (data->simulation_data->num_philosophers % 2)
+        ft_usleep(data, 5);
 	ft_print_status(data, "is thinking");
 }

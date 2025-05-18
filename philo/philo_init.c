@@ -48,7 +48,7 @@ void	ft_create_threads(t_philosopher **philosophers)
     count = 0;
     while (count < (*philosophers)->simulation_data->num_philosophers)
     {
-        pthread_create(&(threads[count]), NULL, &ft_routine_philosopher, philosophers[count]);
+        pthread_create(&(threads[count]), NULL, &ft_schedule_philosopher, philosophers[count]);
         count++;
     }
     death_angel(philosophers);
