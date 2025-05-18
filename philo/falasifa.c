@@ -1,12 +1,12 @@
 #include "philo.h"
 
-/* dining_of_odd_id:
+/* dining_odd_id:
 *	Handles the eating routine for philosophers with odd IDs.
 *	Locks the right fork first, then the left fork.
 *	Updates the philosopher's last meal time and increments the meal count.
 *	Releases the forks after eating.
 */
-void	dining_of_odd_id(t_philosopher *philosopher)
+void	dining_odd_id(t_philosopher *philosopher)
 {
     pthread_mutex_lock(philosopher->right_fork_mutex);
     ft_print_status(philosopher, "has taken a fork");
@@ -29,13 +29,13 @@ void	dining_of_odd_id(t_philosopher *philosopher)
     pthread_mutex_unlock(philosopher->left_fork_mutex);
 }
 
-/* dining_of_even_id:
+/* dining_even_id:
 *	Handles the eating routine for philosophers with even IDs.
 *	Locks the left fork first, then the right fork.
 *	Updates the philosopher's last meal time and increments the meal count.
 *	Releases the forks after eating.
 */
-void	dining_of_even_id(t_philosopher *philosopher)
+void	dining_even_id(t_philosopher *philosopher)
 {
     pthread_mutex_lock(philosopher->left_fork_mutex);
     ft_print_status(philosopher, "has taken a fork");
@@ -54,14 +54,14 @@ void	dining_of_even_id(t_philosopher *philosopher)
 
 /* eating:
 *	Determines whether the philosopher should use the odd or even dining routine.
-*	Calls `dining_of_odd_id` or `dining_of_even_id` based on the philosopher's ID.
+*	Calls `dining_odd_id` or `dining_even_id` based on the philosopher's ID.
 */
 void	eating(t_philosopher *philosopher)
 {
     if ((philosopher->philosopher_id % 2))
-        dining_of_odd_id(philosopher);
+        dining_odd_id(philosopher);
     else
-        dining_of_even_id(philosopher);
+        dining_even_id(philosopher);
 }
 
 /* sleeping:
@@ -81,6 +81,6 @@ void	sleeping(t_philosopher *philosopher)
 void	thinking(t_philosopher *data)
 {
     if (data->simulation_data->num_philosophers % 2)
-        ft_usleep(data, 5);
+            ft_usleep(data, 5);
 	ft_print_status(data, "is thinking");
 }
