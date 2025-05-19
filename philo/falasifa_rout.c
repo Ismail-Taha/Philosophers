@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   falasifa_rout.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:27:10 by isallali          #+#    #+#             */
-/*   Updated: 2025/05/19 17:21:58 by isallali         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:51:43 by isallali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*philo_thread3(void *arg)
 	return (NULL);
 }
 
-void	*monitor_thread(void *arg)
+void	*djikstra_mon(void *arg)
 {
 	t_prog	*prog;
 	int		i;

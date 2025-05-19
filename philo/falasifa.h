@@ -65,7 +65,7 @@ int						ft_strncmp(const char *s1, const char *s2, size_t n);
 /* initialization functions */
 int						check_args(int ac, char **av);
 int						prog_args_init(t_prog *prog, int ac, char **av);
-void					*monitor_thread(void *arg);
+void					*djikstra_mon(void *arg);
 int						prog_init(t_prog *prog);
 int						mutexes_init(t_prog *prog);
 void					philos_init(t_prog *prog);

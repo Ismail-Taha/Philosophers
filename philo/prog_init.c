@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_program.c                                     :+:      :+:    :+:   */
+/*   prog_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:26:53 by isallali          #+#    #+#             */
-/*   Updated: 2025/05/19 17:28:03 by isallali         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:51:49 by isallali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	create_threads(t_prog *prog)
 		}
 		i++;
 	}
-	pthread_create(prog->monitor, NULL, monitor_thread, prog);
+	pthread_create(prog->monitor, NULL, djikstra_mon, prog);
 	return (0);
 }
 
