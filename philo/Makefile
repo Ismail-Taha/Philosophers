@@ -1,6 +1,6 @@
 NAME = philo
-CC = cc 
-CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread  -g3 
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -pthread
 SRCS = main.c \
        inp_check.c \
        prog_init.c \
@@ -19,8 +19,8 @@ all : $(NAME)
 
 $(NAME) : $(OBJS) falasifa.h
 	$(CC) $(CFLAGS) $(OBJS) -o $@
-	
-clean : 
+
+clean :
 	rm -rf $(OBJS)
 
 fclean : clean
