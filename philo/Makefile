@@ -1,15 +1,15 @@
 NAME = philo
 CC = cc 
-CFLAGS = -pthread -fsanitize=thread  -g3 
+CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread  -g3 
 SRCS = main.c \
-       args_check.c \
-       init_program.c \
-	   philo_actions.c \
-	   philo_routine.c \
-	   philo_for_3.c \
-	   init_philos.c \
-	   time.c \
-	   utils.c \
+       inp_check.c \
+       prog_init.c \
+	   falasifa_act.c \
+	   falasifa_rout.c \
+	   three_philo_rout.c \
+	   philo_init.c \
+	   time_utils.c \
+	   utils_func.c \
 
 
 
@@ -17,7 +17,7 @@ OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) philosophers.h
+$(NAME) : $(OBJS) falasifa.h
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 	
 clean : 

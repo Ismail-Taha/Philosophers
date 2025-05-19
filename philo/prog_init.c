@@ -1,8 +1,20 @@
-#include "philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_program.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 15:26:53 by isallali          #+#    #+#             */
+/*   Updated: 2025/05/19 17:28:03 by isallali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int mutexes_init(t_prog *prog)
+#include "falasifa.h"
+
+int	mutexes_init(t_prog *prog)
 {
-	int i;
+	int	i;
 
 	if (pthread_mutex_init(&prog->print_mtx, NULL)
 		|| pthread_mutex_init(&prog->dead_mtx, NULL))
@@ -21,15 +33,18 @@ int mutexes_init(t_prog *prog)
 				pthread_mutex_destroy(&prog->philos[i].meal_mtx);
 			}
 			return (pthread_mutex_destroy(&prog->print_mtx),
-				pthread_mutex_destroy(&prog->dead_mtx), 1);
+				pthread_mutex_destroy(&prog->dead_mtx),
+				1);
 		}
 	}
 	return (0);
 }
 
-static int create_threads(t_prog *prog)
+static int	create_threads(t_prog *prog)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	prog->start = get_time();
 	while (i < prog->philo_count)
 	{
@@ -38,12 +53,14 @@ static int create_threads(t_prog *prog)
 		pthread_mutex_unlock(&prog->philos[i].meal_mtx);
 		if (prog->philo_count % 2 != 0 && i < 3)
 		{
-			if (pthread_create(&prog->threads[i], NULL, philo_thread3, &prog->philos[i]))
+			if (pthread_create(&prog->threads[i], NULL, philo_thread3,
+					&prog->philos[i]))
 				return (1);
 		}
 		else
 		{
-			if (pthread_create(&prog->threads[i], NULL, philo_thread, &prog->philos[i]))
+			if (pthread_create(&prog->threads[i], NULL, philo_thread,
+					&prog->philos[i]))
 				return (1);
 		}
 		i++;
@@ -52,7 +69,7 @@ static int create_threads(t_prog *prog)
 	return (0);
 }
 
-int prog_init(t_prog *prog)
+int	prog_init(t_prog *prog)
 {
 	prog->dead = 0;
 	prog->forks = malloc(sizeof(pthread_mutex_t) * prog->philo_count);
@@ -76,9 +93,9 @@ int prog_init(t_prog *prog)
 	return (philos_init(prog), create_threads(prog));
 }
 
-void prog_clean(t_prog *prog)
+void	prog_clean(t_prog *prog)
 {
-	int i;
+	int	i;
 
 	if (prog->monitor)
 		pthread_join(*prog->monitor, NULL);
@@ -96,11 +113,10 @@ void prog_clean(t_prog *prog)
 		pthread_mutex_destroy(&prog->print_mtx);
 		pthread_mutex_destroy(&prog->dead_mtx);
 		if (prog->philo_count % 2 != 0)
-		{
 			pthread_mutex_destroy(&prog->turn_mtx);
-		}
 		free(prog->forks);
 		free(prog->threads);
-		free(prog->philos);
+		free(prog->philos),
+		free(prog->monitor);
 	}
 }

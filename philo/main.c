@@ -1,8 +1,20 @@
-#include "philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 15:26:57 by isallali          #+#    #+#             */
+/*   Updated: 2025/05/19 17:21:55 by isallali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int handle_one_philo(t_prog *prog)
+#include "falasifa.h"
+
+static int	handle_one_philo(t_prog *prog)
 {
-	long long start_time;
+	long long	start_time;
 
 	prog->start = get_time();
 	start_time = get_time() - prog->start;
@@ -13,9 +25,9 @@ static int handle_one_philo(t_prog *prog)
 	return (0);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-	t_prog program;
+	t_prog	program;
 
 	if (check_args(ac, av))
 		return (EXIT_FAILURE);

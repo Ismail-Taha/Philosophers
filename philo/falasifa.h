@@ -1,5 +1,17 @@
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   falasifa.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 15:27:14 by isallali          #+#    #+#             */
+/*   Updated: 2025/05/19 15:27:15 by isallali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FALASIFA_H
+# define FALASIFA_H
 
 # include <limits.h>
 # include <pthread.h>
@@ -69,4 +81,4 @@ void					*philo_thread3(void *arg);
 /* cleanup functions */
 void					prog_clean(t_prog *prog);
 
-#endif
+#endif /*FALASIFA_H*/

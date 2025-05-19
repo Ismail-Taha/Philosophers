@@ -1,6 +1,18 @@
-#include "philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_for_3.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 15:27:04 by isallali          #+#    #+#             */
+/*   Updated: 2025/05/19 17:21:58 by isallali         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void take_forks3(t_philo *philo)
+#include "falasifa.h"
+
+void	take_forks3(t_philo *philo)
 {
 	if (philo->lfork < philo->rfork)
 	{
@@ -18,7 +30,7 @@ void take_forks3(t_philo *philo)
 	}
 }
 
-static int wait_for_turn(t_philo *philo)
+static int	wait_for_turn(t_philo *philo)
 {
 	while (1)
 	{
@@ -32,7 +44,7 @@ static int wait_for_turn(t_philo *philo)
 	return (0);
 }
 
-static int release_resources_on_death(t_philo *philo)
+static int	release_resources_on_death(t_philo *philo)
 {
 	if (philo->lfork)
 		pthread_mutex_unlock(philo->lfork);
@@ -42,7 +54,7 @@ static int release_resources_on_death(t_philo *philo)
 	return (1);
 }
 
-static void finish_eating_and_update_turn(t_philo *philo)
+static void	finish_eating_and_update_turn(t_philo *philo)
 {
 	ft_usleep(philo->prog->t_eat, philo->prog);
 	if (philo->lfork)
@@ -54,7 +66,7 @@ static void finish_eating_and_update_turn(t_philo *philo)
 	pthread_mutex_unlock(&philo->prog->turn_mtx);
 }
 
-int eat3_action(t_philo *philo)
+int	eat3_action(t_philo *philo)
 {
 	if (get_dead(philo->prog))
 		return (1);
