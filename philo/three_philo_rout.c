@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_for_3.c                                      :+:      :+:    :+:   */
+/*   three_philo_rout.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: isallali <isallali@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:27:04 by isallali          #+#    #+#             */
-/*   Updated: 2025/05/19 17:21:58 by isallali         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:21:26 by isallali         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,6 @@ static int	release_resources_on_death(t_philo *philo)
 	return (1);
 }
 
-static void	finish_eating_and_update_turn(t_philo *philo)
-{
-	ft_usleep(philo->prog->t_eat, philo->prog);
-	if (philo->lfork)
-		pthread_mutex_unlock(philo->lfork);
-	if (philo->rfork)
-		pthread_mutex_unlock(philo->rfork);
-	if (!get_dead(philo->prog))
-		philo->prog->turn = (philo->prog->turn + 1) % 3;
-	pthread_mutex_unlock(&philo->prog->turn_mtx);
-}
-
 int	eat3_action(t_philo *philo)
 {
 	if (get_dead(philo->prog))
@@ -77,6 +65,11 @@ int	eat3_action(t_philo *philo)
 		return (release_resources_on_death(philo));
 	print_state(philo, "is eating");
 	set_last_meal(philo);
-	finish_eating_and_update_turn(philo);
+	ft_usleep(philo->prog->t_eat, philo->prog);
+	pthread_mutex_unlock(philo->lfork);
+	pthread_mutex_unlock(philo->rfork);
+	if (!get_dead(philo->prog))
+		philo->prog->turn = (philo->prog->turn + 1) % 3;
+	pthread_mutex_unlock(&philo->prog->turn_mtx);
 	return (0);
 }
